@@ -1,0 +1,83 @@
+!!! 5
+%html{:lang => 'en'}
+  %head
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    %meta{:content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type'}
+    %meta{:name => :viewport, :content => 'width=device-width,initial-scale=1'}
+    %title= @title.present? ? "#{@title} | Padrino Admin" : "Padrino Admin"
+    =favicon_tag 'favicon.ico'
+    /%link{:href => 'http://fonts.googleapis.com/css?family=Varela', :rel => :stylesheet}
+    =stylesheet_link_tag 'bootstrap', 'application'
+    /%link{:href=>"/stylesheets/bootstrap.css",:rel=>"stylesheet",:type=>"text/css"}
+    /%link{:href=>"/stylesheets/application.css",:rel=>"stylesheet",:type=>"text/css"}
+    
+
+  %body
+    %nav.navbar.navbar-default{:role=>"navigation"}
+      .container-fluid
+        .navbar-header
+          =link_to "打卡神器",url("/")  
+        .collapse.navbar-collapse{:id=>"bs-example-navbar-collapse-1"}
+          %ul.nav.navbar-nav
+
+            %li.dropdown
+              =link_to tag_icon("angle-down","TBD"),url("/"),"data-toggle"=>"dropdown",:class=>"dropdown-toggle"
+              
+              %ul.dropdown-menu{:role=>"menu"}
+                %li
+                  %a{:href=>"#"} Action
+                %li
+                  %a{:href=>"#"} Another Action
+                %li.divider
+                %li=link_to "Separated link",url("#")
+
+                %li.divider
+                %li=link_to "Separated link",url("#")
+          %ul.nav.navbar-nav.navbar-right
+            %li=link_to "打卡",url("/")
+           
+
+            -if session[:user_id].nil?
+              %li=link_to "Hunter",url(:time_sheets,:user_history,:user_name=>"Hunter") 
+              %li=link_to "Frank",url(:time_sheets,:user_history,:user_name=>"Frank") 
+              %li=link_to "ZhengYong",url(:time_sheets,:user_history,:user_name=>"ZhengYong")          
+      
+            -else
+              %li=link_to "欢迎 #{session[:user_name]}！" ,url("#")
+              %li.dropdown
+                =link_to"example3",url("/#"),{"data-toggle"=>"dropdown"}
+                %ul.dropdown-menu{:role=>"menu"}
+
+                  =link_to"example4",url("/")              
+                  %li.divider
+                  %li
+                    =link_to "example5",url("/")
+
+    
+    .container.main
+      /.main-wrapper
+      /= flash[:warning] 
+      /%p divider
+      ={:error => 'danger', :warning => 'warning', :success => 'success', :notice => 'info'}.map { |type, class_name| flash_tag(type, :class => "alert alert-#{class_name} fade in", :bootstrap => true) }.join.html_safe
+      .row=yield
+        
+      /%p="hello, this layout is  from layout inside app/views/layouts/application.haml"
+      .main-wrapper-push
+
+    %footer
+      .footer-wrapper.container
+        %p.pull-left
+          Copyright &copy;
+          =Time.now.year
+          Your Site - Powered by Padrino v.#{Padrino.version}
+        %ul.pull-right.footer-links
+          %li= link_to tag_icon(:home, 'web'), 'http://www.padrinorb.com', :target => :_blank, :class => 'footer-links-link'
+          %li= link_to tag_icon(:heart, 'blog'), 'http://www.padrinorb.com/blog', :target => :_blank, :class => 'footer-links-link'
+          %li= link_to tag_icon(:github, 'code'), 'https://github.com/padrino/padrino-framework', :target => :_blank, :class => 'footer-links-link'
+          %li= link_to tag_icon(:twitter, 'twitter'), 'http://twitter.com/padrinorb', :target => :_blank, :class => 'footer-links-link'
+
+    =javascript_include_tag 'jquery', (Padrino.env == :production ? 'bootstrap/bootstrap.min' : %w[bootstrap/affix bootstrap/alert bootstrap/button bootstrap/carousel bootstrap/collapse bootstrap/dropdown  bootstrap/tooltip bootstrap/transition  bootstrap/modal bootstrap/popover bootstrap/scrollspy bootstrap/tab]), :application
+    /=javascript_include_tag 'jquery-1.9.0.min',  'bootstrap.min', :application

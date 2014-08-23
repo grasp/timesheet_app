@@ -1,0 +1,39 @@
+%h3 Punch Card
+%p= flash_tag(:notice)
+
+%table.table
+  %tr
+    %th  队友
+    %th  全部打卡次数
+    %th 本周打卡
+    %th 本月打卡
+    %th  全部分钟数
+    %th  任务及打卡状态
+
+  -@all_user.each do |user|
+    %tr
+      %td
+        %h3=link_to "#{user}",url(:time_sheets,:user_history,:user_name=>user)
+      %td= @working_status_hash[user]["count"]
+      %td=@working_status_hash[user]["week_count"]
+      %td=@working_status_hash[user]["month_count"]
+      %td=@working_status_hash[user]["total_hour"]
+
+      %td
+        -if @working_status_hash[user]["working_status"]=="idle"
+          = form_tag '/time_sheets/start_working', :class => 'form-inline', :method => 'post' do
+            =hidden_field_tag(:user_name,:value=>user)
+            %div.form-group 
+              =text_field_tag(:plan_item, :placeholder=>"开发") 
+            %div.form-group 
+
+              = submit_tag "Start Working",:class => 'btn btn-success form-control'
+        -else
+
+          = form_tag '/time_sheets/end_working', :class => 'form-inline', :method => 'post' do
+            =hidden_field_tag(:user_name,:value=>user)
+            %div.form-group 
+              =text_field_tag(:plan_item,:value=>@working_status_hash[user]["plan_item"])
+              /=label_tag "this"
+            %div.form-group
+              = submit_tag "End Working",:class => 'btn btn-danger form-control'

@@ -1,0 +1,55 @@
+- error = @time_sheet.errors.include?(:user_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :user_id, :class => 'control-label'
+  .controls
+    =f.text_field :user_id, :class => 'form-control input-large input-with-feedback', :autofocus => true
+    %span.help-inline=error ? f.error_message_on(:user_id, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:user_name)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :user_name, :class => 'control-label'
+  .controls
+    =f.text_field :user_name, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:user_name, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:date)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :date, :class => 'control-label'
+  .controls
+    =f.text_field :date, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:date, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:start_time)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :start_time, :class => 'control-label'
+  .controls
+    =f.text_field :start_time, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:start_time, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:end_time)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :end_time, :class => 'control-label'
+  .controls
+    =f.text_field :end_time, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:end_time, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:plan_item)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :plan_item, :class => 'control-label'
+  .controls
+    =f.text_field :plan_item, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:plan_item, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:real_minutes)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :real_minutes, :class => 'control-label'
+  .controls
+    =f.text_field :real_minutes, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:real_minutes, :class => 'text-error') : pat(:example)
+- error = @time_sheet.errors.include?(:comments)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :comments, :class => 'control-label'
+  .controls
+    =f.text_field :comments, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:comments, :class => 'text-error') : pat(:example)
+
+.form-actions
+  =f.submit pat(:save), :class => 'btn btn-primary'
+  &nbsp;
+  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  &nbsp;
+  =link_to pat(:cancel), url(:time_sheets, :index), :class => 'btn btn-default'

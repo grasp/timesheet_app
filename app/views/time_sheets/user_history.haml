@@ -1,0 +1,16 @@
+%ul.breadcrumb.list-inline
+  %li=link_to "home",url("/")   
+  
+%h2.text-center="#{params["user_name"]} 打卡历史"
+%table.table
+  %tr
+    %th  start_time
+    %th   end_time
+    %th   real_time
+
+  -@time_sheets.each do |timesheet|
+    %tr
+      %td=timesheet.start_time
+      %td=timesheet.end_time
+      %td=timesheet.real_minutes
+

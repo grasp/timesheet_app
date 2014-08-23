@@ -1,0 +1,10 @@
+---
+:orm: activerecord
+:test: riot
+:mock: mocha
+:script: jquery
+:renderer: haml
+:stylesheet: sass
+:namespace: TimesheetApp
+:migration_format: number
+:admin_renderer: haml

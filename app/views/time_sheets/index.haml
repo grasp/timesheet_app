@@ -1,0 +1,68 @@
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, pat(:list)), url(:time_sheets, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:time_sheets, :new)
+
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              %li.list-menu-divider.divider
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                .list-menu-popover-delete-selected.popover.right
+                  .arrow
+                  %h3.popover-title=pat(:delete_selected_title)
+                  .popover-content
+                    = form_tag url(:time_sheets, :destroy_many), :method => :delete do
+                      =hidden_field_tag :time_sheet_ids, :'data-delete-many-ids' => true
+                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      .btn.btn-default.btn-small.cancel=pat(:cancel)
+        %th.header= mat(:time_sheet, :id)
+        %th.header= mat(:time_sheet, :user_id)
+        %th.header= mat(:time_sheet, :user_name)
+        %th.header= mat(:time_sheet, :date)
+        %th.header= mat(:time_sheet, :start_time)
+        %th.header= mat(:time_sheet, :end_time)
+        %th.header= mat(:time_sheet, :plan_item)
+        %th.header= mat(:time_sheet, :real_minutes)
+        %th.header= mat(:time_sheet, :comments)
+        %th.header= mat(:time_sheet, :created_at)
+        %th.header= mat(:time_sheet, :updated_at)
+        %th.header.list-row-action-header
+
+    %tbody
+      -@time_sheets.each do |time_sheet|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'time_sheet_ids[]', :value => time_sheet.id, :class => 'list-selectable-checkbox'
+          %td.list-column=time_sheet.id
+          %td.list-column=time_sheet.user_id
+          %td.list-column=time_sheet.user_name
+          %td.list-column=time_sheet.date
+          %td.list-column=time_sheet.start_time
+          %td.list-column=time_sheet.end_time
+          %td.list-column=time_sheet.plan_item
+          %td.list-column=time_sheet.real_minutes
+          %td.list-column=time_sheet.comments
+          %td.list-column=time_ago_in_words time_sheet.created_at
+          %td.list-column=time_ago_in_words time_sheet.updated_at
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:time_sheets, :edit, :id => time_sheet.id), :rel => :tooltip, :title => "#{pat(:edit)} time_sheet", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} time_sheet", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title=pat(:delete, :model => "time_sheet")
+                .popover-content
+                  = form_tag url(:time_sheets, :destroy, :id => time_sheet.id), :method => :delete do
+                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-default.btn-small.cancel=pat(:cancel)

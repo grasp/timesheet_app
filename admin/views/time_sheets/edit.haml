@@ -1,0 +1,8 @@
+%ul.nav.nav-tabs
+  %li=link_to tag_icon(:list, pat(:list)), url(:time_sheets, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:time_sheets, :new)
+  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:time_sheets, :edit, :id => @time_sheet.id)
+
+.tabs-content
+  = form_for :time_sheet, url(:time_sheets, :update, :id => @time_sheet.id), :method => :put, :class => 'form-horizontal' do |f|
+    =partial 'time_sheets/form', :locals => { :f => f }
